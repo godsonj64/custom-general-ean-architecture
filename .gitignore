@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+runs/
+exports/
+data/dataset/
+data/**/_cifar_cache/
+*.pt
+*.onnx
+.venv/
+.env

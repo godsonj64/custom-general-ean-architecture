@@ -1,0 +1,36 @@
+seed: 42
+device: auto            # auto | cpu | cuda
+
+data:
+  root: data/dataset    # where the image folder lives / will be created
+  auto_download: true   # download CIFAR-10 and lay it out as image folders if root is empty
+  image_size: 224
+  batch_size: 32
+  num_workers: 2
+  val_split: 0.2        # used only if no explicit val/ folder exists
+
+model:
+  name: general_ean     # general_ean | baseline_cnn
+  num_classes: null     # null = infer from dataset
+  pretrained: true      # use pretrained EfficientNet-B0 weights
+  latent_dim: 256
+  num_concepts: 8       # size of the concept population
+  top_k: 2              # how many concept modules to activate per sample
+  concept_dim: 128
+  world_model_weight: 0.1   # weight of the next-latent prediction loss
+  evolution:
+    enabled: true
+    prune_threshold: 0.02   # concepts used less than this fraction get reset
+    warmup_epochs: 3        # epochs before evolution can act
+
+train:
+  epochs: 20
+  lr: 0.0003
+  weight_decay: 0.0001
+  label_smoothing: 0.05
+  output_dir: runs
+
+export:
+  output_dir: exports
+  formats: [pytorch, onnx]
+  opset: 17
